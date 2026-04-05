@@ -1,0 +1,14 @@
+{
+  "id": "sqlserver",
+  "displayName": "Microsoft SQL Server",
+  "driver": {
+    "class": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+    "groupId": "com.microsoft.sqlserver",
+    "artifactId": "mssql-jdbc"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:sqlserver://localhost:1433;databaseName=mydb;encrypt=false;trustServerCertificate=true;",
+    "jdbcUrlNamedInstance": "jdbc:sqlserver://localhost;instanceName=SQLEXPRESS;databaseName=mydb;encrypt=false;trustServerCertificate=true;",
+    "testQuery": "SELECT 1 AS ok"
+  }
+}

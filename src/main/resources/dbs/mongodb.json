@@ -1,0 +1,14 @@
+{
+  "id": "mongodb",
+  "displayName": "MongoDB",
+  "driver": {
+    "class": "com.mongodb.jdbc.MongoDriver",
+    "groupId": "org.mongodb",
+    "artifactId": "mongodb-jdbc",
+    "classifier": "all"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:mongodb://localhost:27017/mydb",
+    "testQuery": "SELECT 1"
+  }
+}

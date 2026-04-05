@@ -1,0 +1,13 @@
+{
+  "id": "mysql",
+  "displayName": "MySQL",
+  "driver": {
+    "class": "com.mysql.cj.jdbc.Driver",
+    "groupId": "com.mysql",
+    "artifactId": "mysql-connector-j"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:mysql://localhost:3306/mydb",
+    "testQuery": "SELECT 1"
+  }
+}

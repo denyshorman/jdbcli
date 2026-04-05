@@ -1,0 +1,13 @@
+{
+  "id": "oracle",
+  "displayName": "Oracle Database",
+  "driver": {
+    "class": "oracle.jdbc.OracleDriver",
+    "groupId": "com.oracle.database.jdbc",
+    "artifactId": "ojdbc11"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:oracle:thin:@//localhost:1521/XEPDB1",
+    "testQuery": "SELECT 1 FROM DUAL"
+  }
+}

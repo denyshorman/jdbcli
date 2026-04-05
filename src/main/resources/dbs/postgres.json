@@ -1,0 +1,13 @@
+{
+  "id": "postgres",
+  "displayName": "PostgreSQL",
+  "driver": {
+    "class": "org.postgresql.Driver",
+    "groupId": "org.postgresql",
+    "artifactId": "postgresql"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:postgresql://localhost:5432/mydb",
+    "testQuery": "SELECT 1 AS ok"
+  }
+}

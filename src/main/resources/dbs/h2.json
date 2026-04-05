@@ -1,0 +1,15 @@
+{
+  "id": "h2",
+  "displayName": "H2",
+  "driver": {
+    "class": "org.h2.Driver",
+    "groupId": "com.h2database",
+    "artifactId": "h2"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:h2:tcp://localhost/~/mydb",
+    "jdbcUrlEmbedded": "jdbc:h2:~/mydb",
+    "jdbcUrlMemory": "jdbc:h2:mem:mydb",
+    "testQuery": "SELECT 1"
+  }
+}

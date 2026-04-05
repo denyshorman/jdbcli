@@ -1,0 +1,41 @@
+name: Publish Snapshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test
+    permissions:
+      contents: read
+    uses: ./.github/workflows/func-test.yml
+  build-jar:
+    name: Build Jar
+    needs: test
+    permissions:
+      contents: read
+    uses: ./.github/workflows/func-build-jar.yml
+  publish-snapshot:
+    name: Publish Snapshot Release
+    needs: build-jar
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build-jar.outputs.ARTIFACT_ID }}
+          path: build/libs
+      - name: Publish Snapshot
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Snapshot Release
+          tag_name: snapshot
+          prerelease: true
+          make_latest: false
+          generate_release_notes: false
+          files: build/libs/jdbcli.jar

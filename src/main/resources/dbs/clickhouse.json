@@ -1,0 +1,14 @@
+{
+  "id": "clickhouse",
+  "displayName": "ClickHouse",
+  "driver": {
+    "class": "com.clickhouse.jdbc.ClickHouseDriver",
+    "groupId": "com.clickhouse",
+    "artifactId": "clickhouse-jdbc",
+    "classifier": "all"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:clickhouse://localhost:8123/mydb",
+    "testQuery": "SELECT 1"
+  }
+}

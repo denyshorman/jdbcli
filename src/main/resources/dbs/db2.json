@@ -1,0 +1,13 @@
+{
+  "id": "db2",
+  "displayName": "IBM DB2",
+  "driver": {
+    "class": "com.ibm.db2.jcc.DB2Driver",
+    "groupId": "com.ibm.db2",
+    "artifactId": "jcc"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:db2://localhost:50000/mydb",
+    "testQuery": "SELECT 1 FROM SYSIBM.SYSDUMMY1"
+  }
+}

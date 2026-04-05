@@ -1,0 +1,13 @@
+{
+  "id": "snowflake",
+  "displayName": "Snowflake",
+  "driver": {
+    "class": "net.snowflake.client.jdbc.SnowflakeDriver",
+    "groupId": "net.snowflake",
+    "artifactId": "snowflake-jdbc"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:snowflake://account.snowflakecomputing.com/?db=mydb&warehouse=mywh&role=myrole",
+    "testQuery": "SELECT 1"
+  }
+}

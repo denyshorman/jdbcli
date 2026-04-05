@@ -1,0 +1,13 @@
+{
+  "id": "redshift",
+  "displayName": "Amazon Redshift",
+  "driver": {
+    "class": "com.amazon.redshift.jdbc42.Driver",
+    "groupId": "com.amazon.redshift",
+    "artifactId": "redshift-jdbc42"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:redshift://cluster.id.region.redshift.amazonaws.com:5439/mydb",
+    "testQuery": "SELECT 1"
+  }
+}

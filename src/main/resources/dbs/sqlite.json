@@ -1,0 +1,14 @@
+{
+  "id": "sqlite",
+  "displayName": "SQLite",
+  "driver": {
+    "class": "org.sqlite.JDBC",
+    "groupId": "org.xerial",
+    "artifactId": "sqlite-jdbc"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:sqlite:/path/to/database.db",
+    "jdbcUrlMemory": "jdbc:sqlite::memory:",
+    "testQuery": "SELECT 1"
+  }
+}

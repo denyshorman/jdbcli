@@ -1,0 +1,13 @@
+{
+  "id": "trino",
+  "displayName": "Trino",
+  "driver": {
+    "class": "io.trino.jdbc.TrinoDriver",
+    "groupId": "io.trino",
+    "artifactId": "trino-jdbc"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:trino://localhost:8080/catalog/schema",
+    "testQuery": "SELECT 1"
+  }
+}

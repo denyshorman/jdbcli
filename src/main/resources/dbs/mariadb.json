@@ -1,0 +1,13 @@
+{
+  "id": "mariadb",
+  "displayName": "MariaDB",
+  "driver": {
+    "class": "org.mariadb.jdbc.Driver",
+    "groupId": "org.mariadb.jdbc",
+    "artifactId": "mariadb-java-client"
+  },
+  "examples": {
+    "jdbcUrl": "jdbc:mariadb://localhost:3306/mydb",
+    "testQuery": "SELECT 1"
+  }
+}

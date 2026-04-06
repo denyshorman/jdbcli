@@ -34,9 +34,27 @@ jdbcli is built for engineers who work with multiple databases and need a lightw
 
 Any other database with a JDBC driver can be added via a [custom descriptor](#custom-database-descriptors).
 
-## Download
+## Installation
 
-Pre-built fat JARs are published automatically on every release. Java 21+ is required.
+### Prerequisites
+
+- Java 21+ — [Download from Adoptium](https://adoptium.net)
+
+### Linux / macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/denyshorman/jdbcli/main/install/install.sh | bash
+```
+
+### Windows (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/denyshorman/jdbcli/main/install/install.ps1 | iex
+```
+
+To customize install paths set `JDBCLI_INSTALL_DIR` (wrapper location) or `JDBCLI_JAR_DIR` (JAR location) before running the installation script.
+
+### Manual download
 
 | Channel | How to get it |
 |---|---|
@@ -44,7 +62,6 @@ Pre-built fat JARs are published automatically on every release. Java 21+ is req
 | **Snapshot** (latest `main`) | [GitHub Releases → snapshot](https://github.com/denyshorman/jdbcli/releases/tag/snapshot) → download `jdbcli.jar` |
 
 ```bash
-# Run after downloading
 java -jar jdbcli.jar --help
 ```
 
@@ -226,6 +243,21 @@ The `safety` block in a profile lets you cap runaway queries:
 | `readOnly` | Passes `Connection.setReadOnly(true)` to the JDBC driver |
 | `maxRows` | Maximum rows returned per query |
 | `timeoutSeconds` | Query execution timeout |
+
+---
+
+## Upgrading jdbcli
+
+```bash
+jdbcli upgrade
+```
+
+Fetches the latest release from GitHub, downloads the new `jdbcli.jar`, and replaces the running JAR in-place. Only supported when running as `java -jar jdbcli.jar`. Restart the process after upgrading.
+
+```bash
+# Check what the latest available version is without downloading
+jdbcli upgrade --check
+```
 
 ---
 

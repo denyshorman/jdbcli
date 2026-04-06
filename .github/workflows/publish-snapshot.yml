@@ -25,6 +25,12 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Move snapshot tag to HEAD
+        run: |
+          git tag -f snapshot HEAD
+          git push origin -f refs/tags/snapshot
       - name: Download Artifacts
         uses: actions/download-artifact@v8
         with:

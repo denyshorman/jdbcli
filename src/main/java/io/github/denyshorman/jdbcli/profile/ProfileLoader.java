@@ -7,34 +7,48 @@ import io.github.denyshorman.jdbcli.util.JsonUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.nio.file.Files;
-import java.util.ArrayList;
+import java.nio.file.Path;
 import java.util.List;
 
 public class ProfileLoader {
     public static List<Profile> loadAll() {
-        var result = new ArrayList<Profile>();
-        var profilesDir = FileSystemUtil.getJdbcliHome().resolve("profiles");
+        var profilesDir = getProfilesDir();
 
-        try {
-            if (Files.exists(profilesDir)) {
-                try (var paths = Files.list(profilesDir)) {
-                    paths.filter(p -> p.toString().endsWith(".json")).forEach(p -> {
-                        try {
-                            result.add(JsonUtil.MAPPER.readValue(p.toFile(), Profile.class));
-                        } catch (Exception e) {
-                            throw new JdbcliException("Operation failed: " + e.getMessage(), e);
-                        }
-                    });
-                }
-            }
+        if (!Files.exists(profilesDir)) {
+            return List.of();
+        }
+
+        try (var paths = Files.list(profilesDir)) {
+            return paths
+                    .filter(p -> p.toString().endsWith(".json"))
+                    .map(p -> JsonUtil.MAPPER.readValue(p.toFile(), Profile.class))
+                    .toList();
         } catch (Exception e) {
             throw new JdbcliException("Operation failed: " + e.getMessage(), e);
         }
-
-        return result;
     }
 
     public static @Nullable Profile load(String name) {
-        return loadAll().stream().filter(p -> p.name().equals(name)).findFirst().orElse(null);
+        var profilesDir = getProfilesDir();
+
+        if (!Files.exists(profilesDir)) {
+            return null;
+        }
+
+        var profilePath = profilesDir.resolve(name + ".json");
+
+        if (!Files.exists(profilePath)) {
+            return null;
+        }
+
+        try {
+            return JsonUtil.MAPPER.readValue(profilePath.toFile(), Profile.class);
+        } catch (Exception e) {
+            throw new JdbcliException("Operation failed: " + e.getMessage(), e);
+        }
+    }
+
+    private static Path getProfilesDir() {
+        return FileSystemUtil.getJdbcliHome().resolve("profiles");
     }
 }

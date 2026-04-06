@@ -2,6 +2,7 @@ package io.github.denyshorman.jdbcli.cli;
 
 import io.github.denyshorman.jdbcli.config.DbDescriptor;
 import io.github.denyshorman.jdbcli.descriptor.DbDescriptorLoader;
+import io.github.denyshorman.jdbcli.exception.JdbcliException;
 import io.github.denyshorman.jdbcli.util.FileSystemUtil;
 import io.github.denyshorman.jdbcli.util.JsonUtil;
 import org.slf4j.Logger;
@@ -56,11 +57,11 @@ public class DbCommand {
     public void show(@Parameters(index = "0", paramLabel = "<id>", description = "Descriptor ID (e.g. postgres, sqlserver, oracle, mongodb)") String dbName) {
         var db = DbDescriptorLoader.load(dbName);
 
-        if (db != null) {
-            System.out.println(JsonUtil.MAPPER.writeValueAsString(db));
-        } else {
-            LOGGER.error("Database not found: {}", dbName);
+        if (db == null) {
+            throw new JdbcliException("Database not found: " + dbName);
         }
+
+        System.out.println(JsonUtil.MAPPER.writeValueAsString(db));
     }
 
     @Command(

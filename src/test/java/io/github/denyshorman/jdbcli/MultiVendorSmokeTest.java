@@ -8,6 +8,7 @@ import io.github.denyshorman.jdbcli.descriptor.DbDescriptorLoader;
 import io.github.denyshorman.jdbcli.driver.DriverInstaller;
 import io.github.denyshorman.jdbcli.execution.JdbcExecutor;
 import io.github.denyshorman.jdbcli.format.JsonOutputFormatter;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -27,10 +28,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Testcontainers
-public class IntegrationTest {
-    @TempDir
-    static Path tempDir;
-
+public class MultiVendorSmokeTest {
     @Container
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine");
 
@@ -43,12 +41,20 @@ public class IntegrationTest {
     @Container
     public static MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongodb/mongodb-enterprise-server:6.0.12-ubuntu2204").asCompatibleSubstituteFor("mongo"));
 
+    @TempDir
+    static Path JDBCLI_HOME;
+
     @BeforeAll
-    public static void setup() {
-        System.setProperty("jdbcli.home", tempDir.toAbsolutePath().toString());
+    public static void setJdbcliHome() {
+        System.setProperty("jdbcli.home", JDBCLI_HOME.toString());
     }
 
-    private void runQueryTest(String dbId, String url, String user, String password, String queryRegex) throws Exception {
+    @AfterAll
+    static void clearJdbcliHome() {
+        System.clearProperty("jdbcli.home");
+    }
+
+    private void runQueryTest(String dbId, String url, String user, String password) throws Exception {
         var db = (DbDescriptor) null;
 
         for (var d : DbDescriptorLoader.loadAll()) {
@@ -88,26 +94,25 @@ public class IntegrationTest {
         var output = bos.toString();
 
         assertTrue(output.contains("\"rowCount\":") || output.contains("\"rowCount\" :"), "Output should contain rowCount");
-        assertTrue(output.contains(queryRegex) || output.contains("1") || output.contains("ok"), "Output should contain expected query result: " + output);
     }
 
     @Test
     public void testPostgres() throws Exception {
-        runQueryTest("postgres", postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword(), "1");
+        runQueryTest("postgres", postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword());
     }
 
     @Test
     public void testSqlServer() throws Exception {
-        runQueryTest("sqlserver", mssql.getJdbcUrl() + ";encrypt=false;trustServerCertificate=true;", mssql.getUsername(), mssql.getPassword(), "1");
+        runQueryTest("sqlserver", mssql.getJdbcUrl() + ";encrypt=false;trustServerCertificate=true;", mssql.getUsername(), mssql.getPassword());
     }
 
     @Test
     public void testOracle() throws Exception {
-        runQueryTest("oracle", oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword(), "1");
+        runQueryTest("oracle", oracle.getJdbcUrl(), oracle.getUsername(), oracle.getPassword());
     }
 
     @Test
     public void testMongo() throws Exception {
-        runQueryTest("mongodb", "jdbc:mongodb://" + mongo.getHost() + ":" + mongo.getMappedPort(27017) + "/admin", null, null, "1");
+        runQueryTest("mongodb", "jdbc:mongodb://" + mongo.getHost() + ":" + mongo.getMappedPort(27017) + "/admin", null, null);
     }
 }

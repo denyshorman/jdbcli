@@ -68,13 +68,19 @@ You can also run directly via Gradle during development:
 
 ## Quick Start
 
-All state is stored under `~/.jdbcli/`:
+All state is stored under `~/.jdbcli/` by default.
 
 | Path | Contents |
 |---|---|
 | `~/.jdbcli/dbs/` | Database descriptors (JSON) |
 | `~/.jdbcli/drivers/` | Downloaded JDBC driver JARs |
 | `~/.jdbcli/profiles/` | Connection profiles (JSON) |
+
+Override with `-Djdbcli.home=<path>`:
+
+```bash
+java -Djdbcli.home=/opt/jdbcli -jar jdbcli.jar db list
+```
 
 ### 1. Browse built-in database descriptors
 

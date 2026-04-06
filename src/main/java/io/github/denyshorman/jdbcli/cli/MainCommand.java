@@ -18,6 +18,7 @@ import picocli.CommandLine.Command;
                 "  3. jdbcli profile init --db mydb --name dev   # create a connection profile",
                 "  4. jdbcli query --profile dev --sql \"SELECT 1\"  # run a query",
                 "",
+                "Set -Djdbcli.home=<path> to use a custom home directory instead of ~/.jdbcli.",
                 "Set JDBCLI_DEBUG=1 to print full stack traces on error.",
         },
         subcommands = {

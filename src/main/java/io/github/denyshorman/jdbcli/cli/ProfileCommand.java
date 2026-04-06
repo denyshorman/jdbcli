@@ -4,20 +4,18 @@ import io.github.denyshorman.jdbcli.config.AuthConfig;
 import io.github.denyshorman.jdbcli.config.Profile;
 import io.github.denyshorman.jdbcli.config.SafetyConfig;
 import io.github.denyshorman.jdbcli.descriptor.DbDescriptorLoader;
+import io.github.denyshorman.jdbcli.driver.DriverInstaller;
 import io.github.denyshorman.jdbcli.exception.JdbcliException;
 import io.github.denyshorman.jdbcli.profile.ProfileLoader;
 import io.github.denyshorman.jdbcli.profile.ProfileWriter;
 import io.github.denyshorman.jdbcli.util.FileSystemUtil;
 import io.github.denyshorman.jdbcli.util.JsonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.util.Map;
-
-import io.github.denyshorman.jdbcli.driver.DriverInstaller;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Command(
         name = "profile",
@@ -103,10 +101,10 @@ public class ProfileCommand {
     public void show(@Option(names = "--profile", required = true, paramLabel = "<name>", description = "Profile name to display") String name) {
         var p = ProfileLoader.load(name);
 
-        if (p != null) {
-            System.out.println(JsonUtil.MAPPER.writeValueAsString(p));
-        } else {
-            LOGGER.error("Profile not found: {}", name);
+        if (p == null) {
+            throw new JdbcliException("Profile not found: " + name);
         }
+
+        System.out.println(JsonUtil.MAPPER.writeValueAsString(p));
     }
 }

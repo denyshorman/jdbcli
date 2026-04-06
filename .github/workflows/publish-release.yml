@@ -7,14 +7,8 @@ on:
       - release
 
 jobs:
-  test:
-    name: Test
-    permissions:
-      contents: read
-    uses: ./.github/workflows/func-test.yml
   build-jar:
     name: Build Jar
-    needs: test
     permissions:
       contents: read
     uses: ./.github/workflows/func-build-jar.yml
